@@ -74,4 +74,26 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return fetchProductArr;
     }
+
+    public ArrayList<ProductModel> getSingleProduct(String id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products WHERE id = " + id, null);
+
+        ArrayList<ProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            ProductModel model = new ProductModel();
+            model.id = cursor.getString(0);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            model.category = cursor.getString(3);
+            model.description = cursor.getString(4);
+            model.rating = new RatingModel();
+            model.rating.rate = cursor.getString(5);
+            model.rating.count = cursor.getString(6);
+            model.image = cursor.getString(7);
+            fetchProductArr.add(model);
+        }
+
+        return fetchProductArr;
+    }
 }

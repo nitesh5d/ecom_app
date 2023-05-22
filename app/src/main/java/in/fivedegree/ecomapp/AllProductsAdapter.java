@@ -18,12 +18,13 @@ public class AllProductsAdapter extends RecyclerView.Adapter<AllProductsAdapter.
 
     ArrayList<ProductModel> data;
     Context context;
+    ItemClickListener itemClickListener;
 
-    public AllProductsAdapter(ArrayList<ProductModel> data, Context context) {
+    public AllProductsAdapter(ArrayList<ProductModel> data, Context context, ItemClickListener itemClickListener) {
         this.data = data;
         this.context = context;
+        this.itemClickListener = itemClickListener;
     }
-
 
 
     @NonNull
@@ -36,19 +37,32 @@ public class AllProductsAdapter extends RecyclerView.Adapter<AllProductsAdapter.
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull holder holder, int position) {
         holder.title.setText(data.get(position).getTitle());
         holder.price.setText("₹ "+data.get(position).getPrice());
         Glide.with(context).load(data.get(position).getImageUrl()).into(holder.img);
 
+        holder.itemView.setOnClickListener(view ->{
+            itemClickListener.onItemClick(data.get(position));
+        });
     }
+
 
     @Override
     public int getItemCount() {
         return data.size();
     }
+
+
+    public interface ItemClickListener {
+        void onItemClick(ProductModel product);
+    }
+
+
+
+
+
 
 
 

@@ -9,5 +9,4 @@ public interface APIInterface {
 
     @GET("/products")
     Call<List<ProductModel>> getProducts();
-
 }

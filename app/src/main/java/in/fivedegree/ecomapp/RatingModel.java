@@ -11,6 +11,10 @@ public class RatingModel {
         this.count = count;
     }
 
+    public RatingModel() {
+
+    }
+
     public String getRate() {
         return rate;
     }

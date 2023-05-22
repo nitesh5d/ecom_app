@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -44,15 +48,20 @@ public class MainActivity extends AppCompatActivity {
 
         listAllProducts();
 
-
-
     }
 
     private void listAllProducts() {
         DBHelper db = new DBHelper(this);
         ArrayList <ProductModel> arrayAllProducts = db.getAllProducts();
         recyclerView = findViewById(R.id.recyclerView);
-        AllProductsAdapter adapter = new AllProductsAdapter(arrayAllProducts, this);
+        AllProductsAdapter adapter = new AllProductsAdapter(arrayAllProducts, this, new AllProductsAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(ProductModel product) {
+                Intent intent = new Intent(MainActivity.this, SingleProductActivity.class);
+                intent.putExtra("productId", product.getId());
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
     }
