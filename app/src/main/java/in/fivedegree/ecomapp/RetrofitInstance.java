@@ -13,7 +13,6 @@ public class RetrofitInstance {
                 .baseUrl(API)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         apiInterface = retrofit.create(APIInterface.class);
     }
 
@@ -22,5 +21,9 @@ public class RetrofitInstance {
             retrofitInstance = new RetrofitInstance();
         }
         return retrofitInstance;
+    }
+
+    public APIInterface getApiInterface() {
+        return apiInterface;
     }
 }
