@@ -22,6 +22,10 @@ public class ProductModel {
         this.rating = rating;
     }
 
+    public ProductModel() {
+
+    }
+
     public String getId() {
         return id;
     }

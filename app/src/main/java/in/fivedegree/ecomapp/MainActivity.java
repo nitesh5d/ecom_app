@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -31,18 +32,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<ProductModel>> call, Response<List<ProductModel>> response) {
                 products = response.body();
-                storeProductsInDatabase(products);
+                if (products != null){
+                    storeProductsInDatabase(products);
+                }
             }
-
             @Override
             public void onFailure(Call<List<ProductModel>> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        listAllProducts();
 
+
+
+    }
+
+    private void listAllProducts() {
+        DBHelper db = new DBHelper(this);
+        ArrayList <ProductModel> arrayAllProducts = db.getAllProducts();
+        recyclerView = findViewById(R.id.recyclerView);
+        AllProductsAdapter adapter = new AllProductsAdapter(arrayAllProducts, this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
     }
 
     private void storeProductsInDatabase(List<ProductModel> products) {

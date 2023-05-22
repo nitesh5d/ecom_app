@@ -10,18 +10,19 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
         app:cardUseCompatPadding="true">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="5dp">
+            android:padding="10dp">
 
         <ImageView
             android:id="@+id/img"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@drawable/placeholder"
             android:scaleType="fitCenter"/>
         <TextView
