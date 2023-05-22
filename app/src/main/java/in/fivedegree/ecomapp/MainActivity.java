@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private void storeProductsInDatabase(List<ProductModel> products) {
         DBHelper db = new DBHelper(this);
 
-        for (int i = 0; i <= products.size(); i++){
+        for (int i = 0; i < products.size(); i++){
             String id = products.get(i).getId();
             String title = products.get(i).getTitle();
             String price = products.get(i).getPrice();

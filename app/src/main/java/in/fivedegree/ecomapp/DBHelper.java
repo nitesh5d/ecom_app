@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.ContentObservable;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -36,14 +38,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public void addProducts(String id, String title, String price, String category, String desc, String imgUrl){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
         values.put("id", id);
         values.put("title", title);
         values.put("price", price);
         values.put("category", category);
-        values.put("desc", desc);
+        values.put("description", desc);
         values.put("image", imgUrl);
 
-        db.insert("products", null, values);
+        db.insertWithOnConflict("products", null, values, SQLiteDatabase.CONFLICT_REPLACE);
     }
 }
