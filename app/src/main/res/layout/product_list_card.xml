@@ -38,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="124"
+            android:textAppearance="@style/ShapeAppearance.Material3.Corner.ExtraLarge"
             android:textSize="16sp"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

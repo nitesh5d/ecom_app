@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -28,11 +29,11 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS products (" +
                 "id INTEGER PRIMARY KEY, " +
                 "title TEXT, " +
-                "price TEXT, " +
+                "price INTEGER, " +
                 "category TEXT, " +
                 "description TEXT, " +
-                "rate TEXT, " +
-                "ratecount TEXT, " +
+                "rate INTEGER, " +
+                "ratecount DOUBLES, " +
                 "image TEXT)");
     }
 
@@ -42,7 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addProducts(String id, String title, String price, String category, String desc, String imgUrl, String rate, String ratecount){
+    public void addProducts(String id, String title, double price, String category, String desc, String imgUrl, double rate, int ratecount){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("id", id);
@@ -91,6 +92,108 @@ public class DBHelper extends SQLiteOpenHelper {
             model.rating.rate = cursor.getString(5);
             model.rating.count = cursor.getString(6);
             model.image = cursor.getString(7);
+            fetchProductArr.add(model);
+        }
+
+        return fetchProductArr;
+    }
+
+    public ArrayList<ProductModel> getSearchProduct(String title){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products WHERE title LIKE '%" + title + "%'" , null);
+
+        ArrayList<ProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            ProductModel model = new ProductModel();
+            model.id = cursor.getString(0);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            model.image = cursor.getString(7);
+            fetchProductArr.add(model);
+        }
+
+        return fetchProductArr;
+    }
+
+    public ArrayList<ProductModel> getProductLowToHigh(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products ORDER BY price ", null);
+
+        ArrayList<ProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            ProductModel model = new ProductModel();
+            model.id = cursor.getString(0);
+            model.image = cursor.getString(7);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            fetchProductArr.add(model);
+        }
+
+        return fetchProductArr;
+    }
+
+    public ArrayList<ProductModel> getProductHighToLow(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products ORDER BY price DESC", null);
+
+        ArrayList<ProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            ProductModel model = new ProductModel();
+            model.id = cursor.getString(0);
+            model.image = cursor.getString(7);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            fetchProductArr.add(model);
+        }
+
+        return fetchProductArr;
+    }
+
+    public ArrayList<ProductModel> getHighestRated(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products ORDER BY rate DESC", null);
+
+        ArrayList<ProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            ProductModel model = new ProductModel();
+            model.id = cursor.getString(0);
+            model.image = cursor.getString(7);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            fetchProductArr.add(model);
+        }
+
+        return fetchProductArr;
+    }
+
+    public ArrayList<ProductModel> getMostPopular(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products ORDER BY ratecount DESC", null);
+
+        ArrayList<ProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            ProductModel model = new ProductModel();
+            model.id = cursor.getString(0);
+            model.image = cursor.getString(7);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            fetchProductArr.add(model);
+        }
+
+        return fetchProductArr;
+    }
+
+    public ArrayList<ProductModel> getLeastPopular(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products ORDER BY ratecount", null);
+
+        ArrayList<ProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            ProductModel model = new ProductModel();
+            model.id = cursor.getString(0);
+            model.image = cursor.getString(7);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
             fetchProductArr.add(model);
         }
 
