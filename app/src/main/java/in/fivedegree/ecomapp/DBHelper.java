@@ -9,6 +9,8 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DB = "EComDB";
@@ -26,6 +28,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "price TEXT, " +
                 "category TEXT, " +
                 "description TEXT, " +
+                "rate TEXT, " +
+                "ratecount TEXT, " +
                 "image TEXT)");
     }
 
@@ -35,7 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addProducts(String id, String title, String price, String category, String desc, String imgUrl){
+    public void addProducts(String id, String title, String price, String category, String desc, String imgUrl, String rate, String ratecount){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("id", id);
@@ -44,7 +48,14 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put("category", category);
         values.put("description", desc);
         values.put("image", imgUrl);
+        values.put("rate", rate);
+        values.put("ratecount", ratecount);
 
         db.insertWithOnConflict("products", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
     }
+
+//    public ArrayList<ProductModel> getAllProducts(){
+//
+//    }
 }

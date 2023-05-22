@@ -1,6 +1,8 @@
 package in.fivedegree.ecomapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private RecyclerView recyclerView;
     public static String API = "https://fakestoreapi.com";
     List<ProductModel> products;
     @Override
@@ -36,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+
     }
 
     private void storeProductsInDatabase(List<ProductModel> products) {
@@ -45,10 +52,12 @@ public class MainActivity extends AppCompatActivity {
             String id = products.get(i).getId();
             String title = products.get(i).getTitle();
             String price = products.get(i).getPrice();
-            String category = products.get(i).getTitle();
+            String category = products.get(i).getCategory();
             String desc = products.get(i).getDescription();
             String img = products.get(i).getImageUrl();
-            db.addProducts(id, title, price, category, desc, img);
+            String rate = products.get(i).getRating().getRate();
+            String ratecount = products.get(i).getRating().getRateCount();
+            db.addProducts(id, title, price, category, desc, img, rate, ratecount);
         }
     }
 }

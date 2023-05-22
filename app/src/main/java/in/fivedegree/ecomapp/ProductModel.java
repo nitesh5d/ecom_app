@@ -9,15 +9,17 @@ public class ProductModel {
     String price;
     String category;
     String description;
-    String imageUrl;
+    String image;
+    RatingModel rating;
 
-    public ProductModel(String id, String title, String price, String category, String description, String imageUrl) {
+    public ProductModel(String id, String title, String price, String category, String description, String image, RatingModel rating) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.category = category;
         this.description = description;
-        this.imageUrl = imageUrl;
+        this.image = image;
+        this.rating = rating;
     }
 
     public String getId() {
@@ -61,10 +63,18 @@ public class ProductModel {
     }
 
     public String getImageUrl() {
-        return imageUrl;
+        return image;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrl(String image) {
+        this.image = image;
+    }
+
+    public RatingModel getRating() {
+        return rating;
+    }
+
+    public void setRating(RatingModel rating) {
+        this.rating = rating;
     }
 }
