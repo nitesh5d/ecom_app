@@ -35,11 +35,27 @@ public class DBHelper extends SQLiteOpenHelper {
                 "rate INTEGER, " +
                 "ratecount DOUBLES, " +
                 "image TEXT)");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS cart (" +
+                "id INTEGER PRIMARY KEY, " +
+                "title TEXT, " +
+                "price INTEGER, " +
+                "qty INTEGER, " +
+                "image TEXT)");
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS orders (" +
+                "id INTEGER PRIMARY KEY, " +
+                "title TEXT, " +
+                "total INTEGER, " +
+                "qty INTEGER, " +
+                "image TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS products");
+        db.execSQL("DROP TABLE IF EXISTS cart");
+        db.execSQL("DROP TABLE IF EXISTS orders");
         onCreate(db);
     }
 
@@ -282,6 +298,40 @@ public class DBHelper extends SQLiteOpenHelper {
             fetchProductArr.add(model);
         }
 
+        return fetchProductArr;
+    }
+
+
+
+
+
+
+    public void addProductsToCart(String id, String title, double price, String img, int qty) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("id", id);
+        values.put("title", title);
+        values.put("price", price);
+        values.put("image", img);
+        values.put("qty", qty);
+
+        db.insertWithOnConflict("cart", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+    }
+
+    public ArrayList<CartProductModel> getAllCartProducts(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM cart", null);
+
+        ArrayList<CartProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            CartProductModel model = new CartProductModel();
+            model.id = cursor.getString(0);
+            model.image = cursor.getString(4);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            model.qty = cursor.getString(3);
+            fetchProductArr.add(model);
+        }
         return fetchProductArr;
     }
 }

@@ -65,6 +65,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         });
 
+        ImageView cartBtn = findViewById(R.id.cart);
+        cartBtn.setOnClickListener(View ->{
+            Intent i = new Intent(MainActivity.this, CartActivity.class);
+            startActivity(i);
+        });
+
         Button searchBtn = findViewById(R.id.searchBtn);
         searchBtn.setOnClickListener(View ->{
             EditText searchInp = findViewById(R.id.searchInp);
@@ -112,6 +118,11 @@ public class MainActivity extends AppCompatActivity {
             listHighestRated();
         });
 
+        LinearLayout filterbycategorybtn = findViewById(R.id.filterbycategory);
+        LinearLayout filterbycategorycont = findViewById(R.id.filterbycategorycont);
+        LinearLayout filterbypricebtn = findViewById(R.id.filterbyprice);
+        LinearLayout filterbypricecont = findViewById(R.id.filterbypricecont);
+
 
         Button filterBtn  = findViewById(R.id.filter);
         filterBtn.setOnClickListener(View ->{
@@ -122,12 +133,9 @@ public class MainActivity extends AppCompatActivity {
         closeFilterBtn.setOnClickListener(View ->{
             LinearLayout filterbox = findViewById(R.id.filterBox);
             filterbox.setVisibility(android.view.View.GONE);
+            filterbycategorycont.setVisibility(android.view.View.GONE);
+            filterbypricecont.setVisibility(android.view.View.GONE);
         });
-
-        LinearLayout filterbycategorybtn = findViewById(R.id.filterbycategory);
-        LinearLayout filterbycategorycont = findViewById(R.id.filterbycategorycont);
-        LinearLayout filterbypricebtn = findViewById(R.id.filterbyprice);
-        LinearLayout filterbypricecont = findViewById(R.id.filterbypricecont);
 
         filterbycategorybtn.setOnClickListener(View ->{
             filterbycategorycont.setVisibility(android.view.View.VISIBLE);
@@ -194,9 +202,13 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-        LinearLayout sortBox = findViewById(R.id.sortBox);
+
         LinearLayout filterbox = findViewById(R.id.filterBox);
+        LinearLayout filterbypricecont = findViewById(R.id.filterbypricecont);
+        LinearLayout filterbycategorycont = findViewById(R.id.filterbycategorycont);
         filterbox.setVisibility(android.view.View.GONE);
+        filterbycategorycont.setVisibility(android.view.View.GONE);
+        filterbypricecont.setVisibility(android.view.View.GONE);
     }
 
     private void getmenclothingProducts() {
@@ -213,9 +225,13 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-        LinearLayout sortBox = findViewById(R.id.sortBox);
+
         LinearLayout filterbox = findViewById(R.id.filterBox);
+        LinearLayout filterbypricecont = findViewById(R.id.filterbypricecont);
+        LinearLayout filterbycategorycont = findViewById(R.id.filterbycategorycont);
         filterbox.setVisibility(android.view.View.GONE);
+        filterbycategorycont.setVisibility(android.view.View.GONE);
+        filterbypricecont.setVisibility(android.view.View.GONE);
     }
 
     private void getwomenclothingProducts() {
@@ -232,9 +248,13 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-        LinearLayout sortBox = findViewById(R.id.sortBox);
+
         LinearLayout filterbox = findViewById(R.id.filterBox);
+        LinearLayout filterbypricecont = findViewById(R.id.filterbypricecont);
+        LinearLayout filterbycategorycont = findViewById(R.id.filterbycategorycont);
         filterbox.setVisibility(android.view.View.GONE);
+        filterbycategorycont.setVisibility(android.view.View.GONE);
+        filterbypricecont.setVisibility(android.view.View.GONE);
     }
 
     private void getelectronicsProducts() {
@@ -251,9 +271,13 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
-        LinearLayout sortBox = findViewById(R.id.sortBox);
+
         LinearLayout filterbox = findViewById(R.id.filterBox);
+        LinearLayout filterbypricecont = findViewById(R.id.filterbypricecont);
+        LinearLayout filterbycategorycont = findViewById(R.id.filterbycategorycont);
         filterbox.setVisibility(android.view.View.GONE);
+        filterbycategorycont.setVisibility(android.view.View.GONE);
+        filterbypricecont.setVisibility(android.view.View.GONE);
     }
 
     private void getproductspricefilter(double min, double max) {

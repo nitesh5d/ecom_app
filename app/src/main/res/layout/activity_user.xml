@@ -73,6 +73,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:maxLines="1"
+        android:maxLength="20"
         android:hint="Username" />
 
     <EditText
@@ -80,6 +82,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+
+        android:maxLines="1"
+        android:maxLength="20"
         android:hint="Password" />
 
     <Button
