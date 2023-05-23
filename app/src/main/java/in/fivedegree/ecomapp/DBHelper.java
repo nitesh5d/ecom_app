@@ -199,4 +199,89 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return fetchProductArr;
     }
+
+    public ArrayList<ProductModel> getPriceFilteredProducts(double min, double max){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products WHERE price >= " + min + " AND price <= "+max , null);
+
+        ArrayList<ProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            ProductModel model = new ProductModel();
+            model.id = cursor.getString(0);
+            model.image = cursor.getString(7);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            fetchProductArr.add(model);
+        }
+
+        return fetchProductArr;
+    }
+
+    public ArrayList<ProductModel> getElectronicsProducts(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products WHERE category = 'electronics'" , null);
+
+        ArrayList<ProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            ProductModel model = new ProductModel();
+            model.id = cursor.getString(0);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            model.image = cursor.getString(7);
+            fetchProductArr.add(model);
+        }
+
+        return fetchProductArr;
+    }
+
+    public ArrayList<ProductModel> getJeweleryProducts(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products WHERE category = 'jewelery'" , null);
+
+        ArrayList<ProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            ProductModel model = new ProductModel();
+            model.id = cursor.getString(0);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            model.image = cursor.getString(7);
+            fetchProductArr.add(model);
+        }
+
+        return fetchProductArr;
+    }
+
+    public ArrayList<ProductModel> getMenClothingProducts(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products WHERE category LIKE 'men%'" , null);
+
+        ArrayList<ProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            ProductModel model = new ProductModel();
+            model.id = cursor.getString(0);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            model.image = cursor.getString(7);
+            fetchProductArr.add(model);
+        }
+
+        return fetchProductArr;
+    }
+
+    public ArrayList<ProductModel> getWomenCLothingProducts(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products WHERE category LIKE 'women%'" , null);
+
+        ArrayList<ProductModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            ProductModel model = new ProductModel();
+            model.id = cursor.getString(0);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            model.image = cursor.getString(7);
+            fetchProductArr.add(model);
+        }
+
+        return fetchProductArr;
+    }
 }

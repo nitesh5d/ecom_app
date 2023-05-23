@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -98,22 +99,182 @@ public class MainActivity extends AppCompatActivity {
         priceLowToHigh.setOnClickListener(View ->{
             listLowToHigh();
         });
-
         priceHighToLow.setOnClickListener(View ->{
             listHighToLow();
         });
-
         mostPopular.setOnClickListener(View ->{
             listMostPopular();
         });
-
         leastPopular.setOnClickListener(View ->{
             listLeastPopular();
         });
-
         highestRated.setOnClickListener(View ->{
             listHighestRated();
         });
+
+
+        Button filterBtn  = findViewById(R.id.filter);
+        filterBtn.setOnClickListener(View ->{
+            LinearLayout filterbox = findViewById(R.id.filterBox);
+            filterbox.setVisibility(android.view.View.VISIBLE);
+        });
+        ImageView closeFilterBtn  = findViewById(R.id.closeFilter);
+        closeFilterBtn.setOnClickListener(View ->{
+            LinearLayout filterbox = findViewById(R.id.filterBox);
+            filterbox.setVisibility(android.view.View.GONE);
+        });
+
+        LinearLayout filterbycategorybtn = findViewById(R.id.filterbycategory);
+        LinearLayout filterbycategorycont = findViewById(R.id.filterbycategorycont);
+        LinearLayout filterbypricebtn = findViewById(R.id.filterbyprice);
+        LinearLayout filterbypricecont = findViewById(R.id.filterbypricecont);
+
+        filterbycategorybtn.setOnClickListener(View ->{
+            filterbycategorycont.setVisibility(android.view.View.VISIBLE);
+            filterbypricecont.setVisibility(android.view.View.GONE);
+        });
+        filterbypricebtn.setOnClickListener(View ->{
+            filterbypricecont.setVisibility(android.view.View.VISIBLE);
+            filterbycategorycont.setVisibility(android.view.View.GONE);
+        });
+
+        Button showfilterbypricebtn  = findViewById(R.id.showfilterbypricebtn);
+        showfilterbypricebtn.setOnClickListener(View ->{
+            EditText minpriceInp = findViewById(R.id.minpriceinp);
+            EditText maxpriceInp = findViewById(R.id.maxpriceinp);
+
+            String minpricevalue = minpriceInp.getText().toString();
+            String maxpricevalue = maxpriceInp.getText().toString();
+
+            if (minpricevalue.equals("") || maxpricevalue.equals("")){
+                Toast.makeText(this, "Enter both minimum & maximum prices", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                double minpriceint = Double.parseDouble(minpricevalue);
+                double maxpriceint = Double.parseDouble(maxpricevalue);
+                getproductspricefilter(minpriceint, maxpriceint);
+            }
+        });
+
+
+        LinearLayout showfilterbyelectronics = findViewById(R.id.filterbyelectronics);
+        LinearLayout showfilterbyjewelery = findViewById(R.id.filterbyjewelery);
+        LinearLayout showfilterbymenclothing = findViewById(R.id.filterbymenclothing);
+        LinearLayout showfilterbywomenclothing = findViewById(R.id.filterbywomenclothing);
+
+        showfilterbyelectronics.setOnClickListener(View ->{
+            getelectronicsProducts();
+        });
+
+        showfilterbyjewelery.setOnClickListener(View ->{
+            getjeweleryProducts();
+        });
+
+        showfilterbymenclothing.setOnClickListener(View ->{
+            getmenclothingProducts();
+        });
+
+        showfilterbywomenclothing.setOnClickListener(View ->{
+            getwomenclothingProducts();
+        });
+
+    }
+
+    private void getjeweleryProducts() {
+        DBHelper db = new DBHelper(this);
+        ArrayList <ProductModel> arrayAllProducts = db.getJeweleryProducts();
+        recyclerView = findViewById(R.id.recyclerView);
+        AllProductsAdapter adapter = new AllProductsAdapter(arrayAllProducts, this, new AllProductsAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(ProductModel product) {
+                Intent intent = new Intent(MainActivity.this, SingleProductActivity.class);
+                intent.putExtra("productId", product.getId());
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        LinearLayout sortBox = findViewById(R.id.sortBox);
+        LinearLayout filterbox = findViewById(R.id.filterBox);
+        filterbox.setVisibility(android.view.View.GONE);
+    }
+
+    private void getmenclothingProducts() {
+        DBHelper db = new DBHelper(this);
+        ArrayList <ProductModel> arrayAllProducts = db.getMenClothingProducts();
+        recyclerView = findViewById(R.id.recyclerView);
+        AllProductsAdapter adapter = new AllProductsAdapter(arrayAllProducts, this, new AllProductsAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(ProductModel product) {
+                Intent intent = new Intent(MainActivity.this, SingleProductActivity.class);
+                intent.putExtra("productId", product.getId());
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        LinearLayout sortBox = findViewById(R.id.sortBox);
+        LinearLayout filterbox = findViewById(R.id.filterBox);
+        filterbox.setVisibility(android.view.View.GONE);
+    }
+
+    private void getwomenclothingProducts() {
+        DBHelper db = new DBHelper(this);
+        ArrayList <ProductModel> arrayAllProducts = db.getWomenCLothingProducts();
+        recyclerView = findViewById(R.id.recyclerView);
+        AllProductsAdapter adapter = new AllProductsAdapter(arrayAllProducts, this, new AllProductsAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(ProductModel product) {
+                Intent intent = new Intent(MainActivity.this, SingleProductActivity.class);
+                intent.putExtra("productId", product.getId());
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        LinearLayout sortBox = findViewById(R.id.sortBox);
+        LinearLayout filterbox = findViewById(R.id.filterBox);
+        filterbox.setVisibility(android.view.View.GONE);
+    }
+
+    private void getelectronicsProducts() {
+        DBHelper db = new DBHelper(this);
+        ArrayList <ProductModel> arrayAllProducts = db.getElectronicsProducts();
+        recyclerView = findViewById(R.id.recyclerView);
+        AllProductsAdapter adapter = new AllProductsAdapter(arrayAllProducts, this, new AllProductsAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(ProductModel product) {
+                Intent intent = new Intent(MainActivity.this, SingleProductActivity.class);
+                intent.putExtra("productId", product.getId());
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        LinearLayout sortBox = findViewById(R.id.sortBox);
+        LinearLayout filterbox = findViewById(R.id.filterBox);
+        filterbox.setVisibility(android.view.View.GONE);
+    }
+
+    private void getproductspricefilter(double min, double max) {
+
+        DBHelper db = new DBHelper(this);
+        ArrayList <ProductModel> arrayAllProducts = db.getPriceFilteredProducts(min, max);
+        recyclerView = findViewById(R.id.recyclerView);
+        AllProductsAdapter adapter = new AllProductsAdapter(arrayAllProducts, this, new AllProductsAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(ProductModel product) {
+                Intent intent = new Intent(MainActivity.this, SingleProductActivity.class);
+                intent.putExtra("productId", product.getId());
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        LinearLayout sortBox = findViewById(R.id.sortBox);
+        LinearLayout filterbox = findViewById(R.id.filterBox);
+        filterbox.setVisibility(android.view.View.GONE);
+
     }
 
     private void listLeastPopular() {
