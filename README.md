@@ -1,5 +1,5 @@
 # ecom_app
-This Ecommerce application had features like 
+This Ecommerce application has features like 
 
 -Listing all products from API
 -Login existing user
