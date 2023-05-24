@@ -308,20 +308,25 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void addProductsToCart(String id, String title, double price, String img, int qty) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("id", id);
-        values.put("title", title);
-        values.put("price", price);
-        values.put("image", img);
-        values.put("qty", qty);
+        Cursor cursor =  db.rawQuery("SELECT * FROM cart WHERE id = " + id , null);
+        if (cursor.moveToFirst()) {
+            String updateQuery = "UPDATE cart SET qty = qty + 1  WHERE id = " + id;
+            db.execSQL(updateQuery);
+        } else {
+            ContentValues values = new ContentValues();
+            values.put("id", id);
+            values.put("title", title);
+            values.put("price", price);
+            values.put("image", img);
+            values.put("qty", qty);
 
-        db.insertWithOnConflict("cart", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+            db.insertWithOnConflict("cart", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        }
     }
 
     public ArrayList<CartProductModel> getAllCartProducts(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor =  db.rawQuery("SELECT * FROM cart", null);
-
         ArrayList<CartProductModel> fetchProductArr = new ArrayList<>();
         while (cursor.moveToNext()){
             CartProductModel model = new CartProductModel();
