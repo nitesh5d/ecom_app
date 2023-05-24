@@ -302,10 +302,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-
-
-
-
     public void addProductsToCart(String id, String title, double price, String img, int qty) {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor =  db.rawQuery("SELECT * FROM cart WHERE id = " + id , null);
@@ -338,5 +334,11 @@ public class DBHelper extends SQLiteOpenHelper {
             fetchProductArr.add(model);
         }
         return fetchProductArr;
+    }
+
+    public void deleteProductFromCart(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("cart","id = " + id,null);
+
     }
 }

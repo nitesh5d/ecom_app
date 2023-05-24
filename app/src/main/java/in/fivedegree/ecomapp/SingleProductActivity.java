@@ -62,6 +62,7 @@ public class SingleProductActivity extends AppCompatActivity {
         Toast.makeText(this, "Product added to cart.", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(SingleProductActivity.this, CartActivity.class);
         startActivity(i);
+        finish();
 
     }
 
