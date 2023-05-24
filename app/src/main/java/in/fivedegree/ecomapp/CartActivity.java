@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -20,6 +22,10 @@ public class CartActivity extends AppCompatActivity {
 
         DBHelper db = new DBHelper(this);
         ArrayList<CartProductModel> arrayAllProducts = db.getAllCartProducts();
+        if (arrayAllProducts.size() >0){
+            TextView tv = findViewById(R.id.noProductstv);
+            tv.setVisibility(View.GONE);
+        }
         recyclerView = findViewById(R.id.cartRView);
         CartProductsAdapter adapter = new CartProductsAdapter(arrayAllProducts, this) {
         };
