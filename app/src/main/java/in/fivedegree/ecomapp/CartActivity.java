@@ -19,17 +19,28 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        TextView totalTv = findViewById(R.id.totalTv);
 
+        double sum = 0;
         DBHelper db = new DBHelper(this);
         ArrayList<CartProductModel> arrayAllProducts = db.getAllCartProducts();
         if (arrayAllProducts.size() >0){
             TextView tv = findViewById(R.id.noProductstv);
             tv.setVisibility(View.GONE);
+
+            for (int i = 0; i< arrayAllProducts.size();i++){
+                sum = sum + Double.parseDouble(arrayAllProducts.get(i).getPrice())*Double.parseDouble(arrayAllProducts.get(i).getQty());
+            }
+            totalTv.setText(String.valueOf(sum));
+
         }
         recyclerView = findViewById(R.id.cartRView);
         CartProductsAdapter adapter = new CartProductsAdapter(arrayAllProducts, this) {
         };
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
     }
 }
