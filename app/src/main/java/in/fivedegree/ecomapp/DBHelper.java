@@ -341,4 +341,18 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete("cart","id = " + id,null);
 
     }
+
+    public void increaseQty(String id, int qty) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String updateQuery = "UPDATE cart SET qty = " + qty + " WHERE id = " + id;
+        db.execSQL(updateQuery);
+    }
+
+    public void decreaseQty(String id, int qty) {
+        if (qty > 0){
+            SQLiteDatabase db = this.getWritableDatabase();
+            String updateQuery = "UPDATE cart SET qty = " + qty + " WHERE id = " + id;
+            db.execSQL(updateQuery);
+        }
+    }
 }

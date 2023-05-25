@@ -24,14 +24,14 @@ public class CartActivity extends AppCompatActivity {
         DBHelper db = new DBHelper(this);
         ArrayList<CartProductModel> arrayAllProducts = db.getAllCartProducts();
         recyclerView = findViewById(R.id.cartRView);
-        CartProductsAdapter adapter = new CartProductsAdapter(arrayAllProducts, this, CartActivity.this) {
+        CartProductsAdapter adapter = new CartProductsAdapter(arrayAllProducts, this) {
         };
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         updateTextandTotal(arrayAllProducts);
-
     }
+
     public void updateTextandTotal(ArrayList<CartProductModel> arrayAllProducts) {
 
         double sum = 0;
