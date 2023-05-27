@@ -59,17 +59,6 @@ public class AllProductsAdapter extends RecyclerView.Adapter<AllProductsAdapter.
         void onItemClick(ProductModel product);
     }
 
-
-
-
-
-
-
-
-
-
-
-
     class holder extends RecyclerView.ViewHolder {
         ImageView img;
         TextView title, price;

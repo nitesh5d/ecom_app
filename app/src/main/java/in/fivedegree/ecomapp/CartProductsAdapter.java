@@ -23,7 +23,6 @@ public abstract class CartProductsAdapter extends RecyclerView.Adapter<CartProdu
     ArrayList<CartProductModel> data;
     Context context;
 
-
     public CartProductsAdapter(ArrayList<CartProductModel> data, Context context) {
         this.data = data;
         this.context = context;

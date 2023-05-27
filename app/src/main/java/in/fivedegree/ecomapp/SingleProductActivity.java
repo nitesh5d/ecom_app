@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.style.IconMarginSpan;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.w3c.dom.Text;
 
@@ -59,10 +61,15 @@ public class SingleProductActivity extends AppCompatActivity {
         String img = imgUrl;
         int qty = 1;
         db.addProductsToCart(id, title, price, img, qty);
-        Toast.makeText(this, "Product added to cart.", Toast.LENGTH_SHORT).show();
-        Intent i = new Intent(SingleProductActivity.this, CartActivity.class);
-        startActivity(i);
-        finish();
+        View rootView = findViewById(android.R.id.content);
+        Snackbar snackbar
+                = Snackbar.make(rootView, "Product added to Cart", Snackbar.LENGTH_LONG)
+                .setAction("Open Cart", View ->{
+                    Intent i = new Intent(SingleProductActivity.this, CartActivity.class);
+                    startActivity(i);
+                    finish();
+                });
+        snackbar.show();
 
     }
 

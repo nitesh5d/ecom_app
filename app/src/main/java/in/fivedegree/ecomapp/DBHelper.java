@@ -44,11 +44,14 @@ public class DBHelper extends SQLiteOpenHelper {
                 "image TEXT)");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS orders (" +
-                "id INTEGER PRIMARY KEY, " +
-                "title TEXT, " +
-                "total INTEGER, " +
-                "qty INTEGER, " +
-                "image TEXT)");
+                "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "UserToken TEXT, " +
+                "productid TEXT, " +
+                "orderstatus TEXT, " +
+                "paymode TEXT, " +
+                "total DOUBLES, " +
+                "qty TEXT," +
+                "transactionId TEXT)");
     }
 
     @Override
@@ -354,5 +357,26 @@ public class DBHelper extends SQLiteOpenHelper {
             String updateQuery = "UPDATE cart SET qty = " + qty + " WHERE id = " + id;
             db.execSQL(updateQuery);
         }
+    }
+
+    public Boolean placeOrder(String token, String productId, String orderstatus, String paymode, double total, String qty, String transactionId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("UserToken", token);
+        values.put("productid", productId);
+        values.put("orderstatus", orderstatus);
+        values.put("paymode", paymode);
+        values.put("total", total);
+        values.put("qty", qty);
+        values.put("transactionId", transactionId);
+
+        long placed = db.insertWithOnConflict("orders", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
+        return placed != -1;
+    }
+
+    public void emptyCart(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from cart");
     }
 }
