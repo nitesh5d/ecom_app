@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:layout_marginTop="2dp"
+    android:background="#FAFBFF"
+    android:id="@+id/rfd">
+
+    <ImageView
+        android:id="@+id/orderIv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/orderId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Id #"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@id/orderIv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/orderCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Cost: "
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/orderIv" />
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/orderStatus"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:text="Order Status:"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintStart_toEndOf="@id/orderIv"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/orderCost" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/payMode"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:text="Payment Method:"-->
+<!--        android:textColor="#000000"-->
+<!--        android:textSize="12sp"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/orderIv"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/orderStatus" />-->
+
+    <ImageView
+        android:id="@+id/viewOrder"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:rotation="-90"
+        android:src="@drawable/baseline_keyboard_arrow_down_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

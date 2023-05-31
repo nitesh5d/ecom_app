@@ -57,16 +57,14 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
         confirm = findViewById(R.id.confirmInp);
         placedTv = findViewById(R.id.placedTv);
         progressBar = findViewById(R.id.progressBar);
-
-        Intent intent = getIntent();
         db = new DBHelper(this);
 
-        total = intent.getDoubleExtra("total", 0);
         ArrayList<CartProductModel> arrayAllProducts = db.getAllCartProducts();
-
         CheckoutProductsAdapter adapter = new CheckoutProductsAdapter(arrayAllProducts, this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        Intent intent = getIntent();
+        total = intent.getDoubleExtra("total", 0);
         totalCheckout.setText("Total Payable ₹" + String.valueOf(total));
 
         placeOrder.setOnClickListener(View ->{
@@ -98,7 +96,7 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
                 sharedPreferences = getSharedPreferences("UserAuth", MODE_PRIVATE);
                 UserToken = sharedPreferences.getString("token", null);
                 if (paymentId.equals("pod")){
-                    if(db.placeOrder(UserToken, productsId, "placed", "pod", total, productsQty,"-")){
+                    if(db.placeOrder(UserToken, productsId, "Placed", "Pay On Delivery", total, productsQty,"-")){
                         placedTv.setVisibility(android.view.View.VISIBLE);
                         placedTv.setText("Order Placed!!");
                         progressBar.setVisibility(android.view.View.GONE);
@@ -138,7 +136,7 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
 
     @Override
     public void onPaymentSuccess(String s) {
-        if(db.placeOrder(UserToken, productsId, "placed", "online", total, productsQty,s)){
+        if(db.placeOrder(UserToken, productsId, "Placed", "Online", total, productsQty,s)){
             placedTv.setVisibility(android.view.View.VISIBLE);
             placedTv.setText("Order Placed!!");
             progressBar.setVisibility(View.GONE);

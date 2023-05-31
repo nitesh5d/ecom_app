@@ -34,7 +34,7 @@ public abstract class CartProductsAdapter extends RecyclerView.Adapter<CartProdu
     public holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.cart_products_layout, parent, false);
-        RecyclerView.ViewHolder v = new holder(view);
+//        RecyclerView.ViewHolder v = new holder(view);
         return new holder(view);
     }
 

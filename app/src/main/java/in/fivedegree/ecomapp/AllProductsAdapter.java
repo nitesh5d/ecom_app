@@ -42,7 +42,6 @@ public class AllProductsAdapter extends RecyclerView.Adapter<AllProductsAdapter.
         holder.title.setText(data.get(position).getTitle());
         holder.price.setText("₹ "+data.get(position).getPrice());
         Glide.with(context).load(data.get(position).getImageUrl()).into(holder.img);
-
         holder.itemView.setOnClickListener(view ->{
             itemClickListener.onItemClick(data.get(position));
         });

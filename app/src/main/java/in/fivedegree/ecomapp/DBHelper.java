@@ -379,4 +379,57 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("delete from cart");
     }
+
+    public ArrayList<OrdersModel> getAllOrders(String token){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM orders WHERE UserToken = '" + token + "'", null);
+        ArrayList<OrdersModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            OrdersModel model = new OrdersModel();
+            model.id = cursor.getString(0);
+            model.userToken = cursor.getString(1);
+            model.productId = cursor.getString(2);
+            model.orderStatus = cursor.getString(3);
+            model.payMode = cursor.getString(4);
+            model.cost = Double.parseDouble(cursor.getString(5));
+            model.qty = cursor.getString(6);
+            model.transactionId = cursor.getString(7);
+            fetchProductArr.add(model);
+        }
+        return fetchProductArr;
+    }
+
+    public ArrayList<OrdersModel> getSingleOrder(String id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM orders WHERE id = '" + id + "'", null);
+        ArrayList<OrdersModel> fetchProductArr = new ArrayList<>();
+        while (cursor.moveToNext()){
+            OrdersModel model = new OrdersModel();
+            model.id = cursor.getString(0);
+            model.userToken = cursor.getString(1);
+            model.productId = cursor.getString(2);
+            model.orderStatus = cursor.getString(3);
+            model.payMode = cursor.getString(4);
+            model.cost = Double.parseDouble(cursor.getString(5));
+            model.qty = cursor.getString(6);
+            model.transactionId = cursor.getString(7);
+            fetchProductArr.add(model);
+        }
+        return fetchProductArr;
+    }
+
+    public CartProductModel getOrderProduct(String id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor =  db.rawQuery("SELECT * FROM products WHERE id = '" + id + "'", null);
+        CartProductModel model = new CartProductModel();
+        while (cursor.moveToNext()){
+            model.id = cursor.getString(0);
+            model.title = cursor.getString(1);
+            model.price = cursor.getString(2);
+            model.image = cursor.getString(7);
+        }
+        return model;
+    }
 }
+
+

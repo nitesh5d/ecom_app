@@ -1,6 +1,8 @@
 package in.fivedegree.ecomapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,18 +24,24 @@ import retrofit2.Response;
 
 public class UserActivity extends AppCompatActivity {
 
+    TextView tokenTv;
+    RecyclerView rView;
+    DBHelper db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
 
-        TextView tokenTv = findViewById(R.id.token);
+        tokenTv = findViewById(R.id.token);
+        rView = findViewById(R.id.ordersRView);
+        db = new DBHelper(this);
+        LinearLayout userDetails = findViewById(R.id.userDetailsCont);
+        LinearLayout loginCont = findViewById(R.id.loginCont);
 
         SharedPreferences sharedPreferences = getSharedPreferences("UserAuth", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", null);
-        LinearLayout userDetails = findViewById(R.id.userDetailsCont);
-        LinearLayout loginCont = findViewById(R.id.loginCont);
         if (token != null){
             tokenTv.setText(token);
             userDetails.setVisibility(View.VISIBLE);
@@ -43,11 +52,15 @@ public class UserActivity extends AppCompatActivity {
             loginCont.setVisibility(View.VISIBLE);
         }
 
+        ArrayList<OrdersModel> arrayAllProducts = db.getAllOrders(token);
+        OrdersAdapter adapter = new OrdersAdapter(arrayAllProducts, this);
+        rView.setAdapter(adapter);
+        rView.setLayoutManager(new LinearLayoutManager(this));
+
 
         EditText userInp = findViewById(R.id.userInp);
         EditText pwInp = findViewById(R.id.pwInp);
         Button loginBtn = findViewById(R.id.loginBtn);
-
         loginBtn.setOnClickListener(View ->{
             String username = userInp.getText().toString();
             String pw =  pwInp.getText().toString();
