@@ -62,6 +62,7 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
         ArrayList<CartProductModel> arrayAllProducts = db.getAllCartProducts();
         CheckoutProductsAdapter adapter = new CheckoutProductsAdapter(arrayAllProducts, this);
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         Intent intent = getIntent();
         total = intent.getDoubleExtra("total", 0);
