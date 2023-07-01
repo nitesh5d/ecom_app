@@ -72,15 +72,20 @@ public class UserActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                         LoginResponse loginResponse = response.body();
-                        String token = loginResponse.getToken();
-                        SharedPreferences sharedPreferences = getSharedPreferences("UserAuth", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("token", token);
-                        editor.apply();
-                        Toast.makeText(UserActivity.this, "Logged In", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(UserActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        if (loginResponse != null){
+                            String token = loginResponse.getToken();
+                            SharedPreferences sharedPreferences = getSharedPreferences("UserAuth", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("token", token);
+                            editor.apply();
+                            Toast.makeText(UserActivity.this, "Logged In", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(UserActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else {
+                            Toast.makeText(UserActivity.this, "Login failed. Try Again", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     @Override
                     public void onFailure(Call<LoginResponse> call, Throwable t) {

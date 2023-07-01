@@ -1,5 +1,6 @@
 package in.fivedegree.ecomapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.google.android.material.slider.RangeSlider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,22 +149,22 @@ public class MainActivity extends AppCompatActivity {
             filterbycategorycont.setVisibility(android.view.View.GONE);
         });
 
+        RangeSlider range = findViewById(R.id.continuousRangeSlider);
+        String[] priceRange = new String[2];
+        priceRange[0] = String.valueOf(range.getValueFrom());
+        priceRange[1] = String.valueOf(range.getValueTo());
+        range.addOnChangeListener(new RangeSlider.OnChangeListener() {
+            @Override
+            public void onValueChange(@NonNull RangeSlider slider, float value, boolean fromUser) {
+                priceRange[0] = range.getValues().get(0).toString();
+                priceRange[1] = range.getValues().get(1).toString();
+            }
+        });
         Button showfilterbypricebtn  = findViewById(R.id.showfilterbypricebtn);
         showfilterbypricebtn.setOnClickListener(View ->{
-            EditText minpriceInp = findViewById(R.id.minpriceinp);
-            EditText maxpriceInp = findViewById(R.id.maxpriceinp);
-
-            String minpricevalue = minpriceInp.getText().toString();
-            String maxpricevalue = maxpriceInp.getText().toString();
-
-            if (minpricevalue.equals("") || maxpricevalue.equals("")){
-                Toast.makeText(this, "Enter both minimum & maximum prices", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                double minpriceint = Double.parseDouble(minpricevalue);
-                double maxpriceint = Double.parseDouble(maxpricevalue);
-                getproductspricefilter(minpriceint, maxpriceint);
-            }
+            double minpriceint = Double.parseDouble(priceRange[0]);
+            double maxpriceint = Double.parseDouble(priceRange[1]);
+            getproductspricefilter(minpriceint, maxpriceint);
         });
 
 
@@ -281,7 +284,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getproductspricefilter(double min, double max) {
-
         DBHelper db = new DBHelper(this);
         ArrayList <ProductModel> arrayAllProducts = db.getPriceFilteredProducts(min, max);
         recyclerView = findViewById(R.id.recyclerView);

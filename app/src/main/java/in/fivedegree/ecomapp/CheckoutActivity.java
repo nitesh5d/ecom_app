@@ -99,6 +99,7 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
                 if (paymentId.equals("pod")){
                     if(db.placeOrder(UserToken, productsId, "Placed", "Pay On Delivery", total, productsQty,"-")){
                         placedTv.setVisibility(android.view.View.VISIBLE);
+                        Toast.makeText(this, "Order Placed.", Toast.LENGTH_SHORT).show();
                         placedTv.setText("Order Placed!!");
                         progressBar.setVisibility(android.view.View.GONE);
                         Intent i = new Intent(CheckoutActivity.this, MainActivity.class);
@@ -122,8 +123,8 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
                         object.put("name", "ECOM PLUS");
                         object.put("description", "Shopping");
                         object.put("amount", Math.round(total*100));
-                        object.put("prefill.contact", "+919699550419");
-                        object.put("prefill.email", "niteshgupta288@gmail.com");
+                        object.put("prefill.contact", "+919999999999");
+                        object.put("prefill.email", "user-email-address@domain.com");
                         checkout.open(CheckoutActivity.this, object);
                     }
                     catch (JSONException e){
@@ -132,7 +133,6 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
                 }
             }
         });
-
     }
 
     @Override
@@ -141,6 +141,7 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
             placedTv.setVisibility(android.view.View.VISIBLE);
             placedTv.setText("Order Placed!!");
             progressBar.setVisibility(View.GONE);
+            Toast.makeText(this, "Order Placed.", Toast.LENGTH_SHORT).show();
             Intent i = new Intent(CheckoutActivity.this, MainActivity.class);
             startActivity(i);
             finish();
@@ -148,7 +149,8 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
         }
         else {
             placedTv.setVisibility(android.view.View.VISIBLE);
-            placedTv.setText("Payment Successful. Order not PLaced");
+            placedTv.setText("Payment Successful, but Order not Placed.");
+            Toast.makeText(this, "Payment Successful, but Order not Placed.", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.GONE);
         }
     }

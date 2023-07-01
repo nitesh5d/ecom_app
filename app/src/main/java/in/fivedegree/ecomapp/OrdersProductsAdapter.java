@@ -42,7 +42,7 @@ public class OrdersProductsAdapter extends RecyclerView.Adapter<OrdersProductsAd
         holder.title.setText(data.get(position).getTitle());
         holder.qty.setText("Quantity: " + data.get(position).getQty());
         holder.itemView.setOnClickListener(v ->{
-            Intent i = new Intent(context, OrderDetailsActivity.class);
+            Intent i = new Intent(context, SingleProductActivity.class);
             i.putExtra("productId", data.get(position).getId());
             context.startActivity(i);
         });
